@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PayFlow: Simple. Secure. Smarter Payments.</title>
+  <meta name="description" content="PayFlow is a demo digital wallet: send payments by email, watch balances update in real time and track every transaction in one beautiful dashboard.">
+  <meta name="theme-color" content="#070A18">
+  <meta property="og:title" content="PayFlow: Simple. Secure. Smarter Payments.">
+  <meta property="og:description" content="Manage your demo wallet, send payments and track every transaction from one beautiful dashboard.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="PayFlow">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%234C7DFF'/><path d='M28 72V28h24a14 14 0 010 28H40' stroke='white' stroke-width='9' fill='none' stroke-linecap='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" id="brand">
+      <span class="logo">P</span>
+      <span>PayFlow</span>
+    </a>
+    <nav class="nav">
+      <a href="#features" class="nav-link" id="navFeatures">Features</a>
+      <button class="btn ghost" id="signOutBtn" hidden>Sign out</button>
+      <button class="btn primary" id="getStartedBtn">Get started</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Landing -->
+    <section id="landing">
+      <div class="hero">
+        <div class="hero-copy">
+          <h1>Simple. Secure.<br>Smarter payments.</h1>
+          <p class="lead">Send money to anyone with just their email. Your balance updates the moment a payment moves, and every transaction stays in one clean dashboard.</p>
+          <div class="hero-actions">
+            <button class="btn primary large" id="heroStart">Open your wallet</button>
+            <span class="note">Demo wallet. No real money moves.</span>
+          </div>
+        </div>
+        <div class="hero-card" aria-hidden="true">
+          <div class="wallet-preview">
+            <p class="muted">Wallet balance</p>
+            <p class="preview-balance" id="previewBalance">$1,000.00</p>
+            <ul class="preview-list">
+              <li><span class="dot in"></span><span>Ayesha Khan</span><b class="pos">+$120.00</b></li>
+              <li><span class="dot out"></span><span>Daraz Store</span><b class="neg">-$45.50</b></li>
+              <li><span class="dot out"></span><span>Hamza Ali</span><b class="neg">-$30.00</b></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="features" id="features">
+        <article>
+          <h3>Pay by email</h3>
+          <p>No account numbers. Type an email, enter an amount and send.</p>
+        </article>
+        <article>
+          <h3>Live balances</h3>
+          <p>Sender and receiver balances change instantly, even across open tabs.</p>
+        </article>
+        <article>
+          <h3>Full history</h3>
+          <p>Filter every payment you sent, received or added, with notes attached.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Auth -->
+    <section id="auth" hidden>
+      <form class="panel auth-panel" id="authForm" novalidate>
+        <h2>Open your wallet</h2>
+        <p class="muted">Enter an email to create or restore a demo wallet. New wallets start with $1,000.00.</p>
+        <label for="authEmail">Email address</label>
+        <input id="authEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+        <p class="error" id="authError" role="alert"></p>
+        <button class="btn primary large" type="submit">Continue</button>
+      </form>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="app" hidden>
+      <div class="dash-head">
+        <div>
+          <p class="muted" id="userEmail"></p>
+          <h2>Your wallet</h2>
+        </div>
+        <button class="btn ghost" id="topUpBtn">Add $100</button>
+      </div>
+
+      <div class="grid">
+        <div class="panel balance-panel">
+          <p class="muted">Available balance</p>
+          <p class="balance" id="balance">$0.00</p>
+          <div class="stats">
+            <div><span class="muted">Received</span><b class="pos" id="statIn">$0.00</b></div>
+            <div><span class="muted">Sent</span><b class="neg" id="statOut">$0.00</b></div>
+            <div><span class="muted">Payments</span><b id="statCount">0</b></div>
+          </div>
+        </div>
+
+        <form class="panel send-panel" id="sendForm" novalidate>
+          <h3>Send a payment</h3>
+          <label for="toEmail">Recipient email</label>
+          <input id="toEmail" type="email" placeholder="friend@example.com" required>
+          <label for="amount">Amount (USD)</label>
+          <input id="amount" type="number" min="0.01" step="0.01" placeholder="0.00" inputmode="decimal" required>
+          <label for="note">Note (optional)</label>
+          <input id="note" type="text" maxlength="80" placeholder="What is this for?">
+          <p class="error" id="sendError" role="alert"></p>
+          <button class="btn primary" type="submit">Send payment</button>
+        </form>
+      </div>
+
+      <div class="panel history">
+        <div class="history-head">
+          <h3>Transactions</h3>
+          <div class="filters" role="tablist" aria-label="Filter transactions">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="sent">Sent</button>
+            <button class="chip" data-filter="received">Received</button>
+          </div>
+        </div>
+        <ul class="tx-list" id="txList"></ul>
+        <p class="empty" id="emptyState" hidden>No transactions yet. Send your first payment to see it here.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>PayFlow is a demo project. Data stays in your browser and no real payments are made.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
